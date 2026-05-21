@@ -5,6 +5,7 @@ public class LevelGenerator : MonoBehaviour
 {
     public GameObject SawPrefab;
     public GameObject StompBlockPrefab;
+    public GameObject MovingBlockPrefab;
     
     public Texture2D[] LevelPatterns;
     public Tilemap LevelTilemap;
@@ -80,11 +81,19 @@ public class LevelGenerator : MonoBehaviour
         if (pixelColor == Color.black) LevelTilemap.SetTile(worldPosition, WallTile);
         else if (pixelColor == Color.red) SpawnPrefab(SawPrefab, worldPosition);
         else if (pixelColor == normalYellow) SpawnPrefab(StompBlockPrefab, worldPosition);
+        else if (pixelColor == Color.green) SpawnMovingBlock(MovingBlock.MovementDirection.Horizontal, worldPosition);
+        else if (pixelColor == Color.cyan) SpawnMovingBlock(MovingBlock.MovementDirection.Vertical, worldPosition);
         
         // Если пиксель прозрачный или белый — ничего не делаем (остается пустота)
     }
 
-    void SpawnPrefab(GameObject prefabToSpawn, Vector3Int cell)
+    void SpawnMovingBlock(MovingBlock.MovementDirection direction, Vector3Int cell)
+    {
+        var mb = SpawnPrefab(MovingBlockPrefab, cell).GetComponent<MovingBlock>();
+        mb.ChangeDirection(direction);
+    }
+
+    GameObject SpawnPrefab(GameObject prefabToSpawn, Vector3Int cell)
     {
         // 1. Получаем центр тайла в мировых координатах
         var worldPosition = LevelTilemap.GetCellCenterWorld(cell);
@@ -99,5 +108,7 @@ public class LevelGenerator : MonoBehaviour
         
         // 3. (Опционально) Делаем объект дочерним для Tilemap, чтобы не захламлять иерархию
         spawnedObj.transform.parent = LevelTilemap.transform;
+        
+        return spawnedObj;
     }
 }

@@ -10,8 +10,11 @@ public class PlayerScript : MonoBehaviour
     public float hookSpeed = 40f;
     public float pullSpeed = 20f;
     public LayerMask grappleLayer;
-    public float rotationSpeed = 15f; // Скорость наклона
+    public float rotationSpeed = 15f; 
     public float stopDistance = 0.2f;
+
+    [Header("Настройки падения (Кинематика)")]
+    public float fallSpeed = 10f; 
 
     [Header("Компоненты")]
     public LineRenderer lineRenderer;
@@ -19,21 +22,42 @@ public class PlayerScript : MonoBehaviour
     public Animator animator;
     public SpriteRenderer sRenderer;
     public Transform sTransform;
+    public Collider2D playerCollider; // ОБЯЗАТЕЛЬНО: перетащи сюда коллайдер игрока!
 
     private Vector2 targetPoint;
     private bool isGrappling = false; 
     private bool isFlying = false;    
     private Vector2 currentHookPos;
-    
-    // Переменная для отслеживания текущей зажатой клавиши
     private Key activeKey = Key.None;
+
+    // Слой, на котором находится сам игрок (чтобы луч не спотыкался об себя)
+    private ContactFilter2D movementFilter;
+    private RaycastHit2D[] hitBuffer = new RaycastHit2D[1];
+
+    void Start()
+    {
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            // Выключаем встроенные симуляции, теперь мы полностью управляем движением
+            rb.useFullKinematicContacts = false; 
+        }
+
+        if (playerCollider == null)
+        {
+            playerCollider = GetComponent<Collider2D>();
+        }
+
+        // Настраиваем фильтр для коллизий: проверяем только grappleLayer (стены/пол)
+        movementFilter.SetLayerMask(grappleLayer);
+        movementFilter.useLayerMask = true;
+    }
 
     void Update()
     {
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
 
-        // 1. ПРОВЕРКА НАЖАТИЯ (Запуск крюка)
         if (!isGrappling && !isFlying)
         {
             if (keyboard.wKey.wasPressedThisFrame || keyboard.upArrowKey.wasPressedThisFrame) 
@@ -49,10 +73,8 @@ public class PlayerScript : MonoBehaviour
                 StartHook(Vector2.right, keyboard.dKey.wasPressedThisFrame ? Key.D : Key.RightArrow);
         }
 
-        // 2. ПРОВЕРКА ОТПУСКАНИЯ (Разрыв троса)
         if (activeKey != Key.None)
         {
-            // Если текущая активная клавиша была отпущена — останавливаем всё
             if (!keyboard[activeKey].isPressed)
             {
                 StopGrapple();
@@ -69,19 +91,19 @@ public class PlayerScript : MonoBehaviour
 
         if (hit.collider != null)
         {
-            rb.gravityScale = 0; // Гравитация исчезает, пока мы держимся
             rb.linearVelocity = Vector2.zero;
+            activeKey = key; 
             
-            activeKey = key; // Запоминаем, какую клавишу нужно держать
-            
-            // Выравнивание
             Vector2 alignedPoint = hit.point;
             if (direction == Vector2.left || direction == Vector2.right)
             {
                 alignedPoint.y = transform.position.y;
                 sRenderer.flipX = direction == Vector2.right;
             }
-            else if (direction == Vector2.up || direction == Vector2.down) alignedPoint.x = transform.position.x;
+            else if (direction == Vector2.up || direction == Vector2.down) 
+            {
+                alignedPoint.x = transform.position.x;
+            }
 
             targetPoint = alignedPoint;
             StartCoroutine(FlyHookRoutine());
@@ -105,17 +127,57 @@ public class PlayerScript : MonoBehaviour
 
     void FixedUpdate()
     {
+        Vector2 velocityThisFrame = Vector2.zero;
+
         if (isGrappling)
         {
-            Vector2 direction = (targetPoint - (Vector2)transform.position).normalized;
-            rb.linearVelocity = direction * pullSpeed;
+            float distanceToTarget = Vector2.Distance(transform.position, targetPoint);
+            if (distanceToTarget > stopDistance)
+            {
+                Vector2 direction = (targetPoint - (Vector2)transform.position).normalized;
+                float currentSpeed = Mathf.Min(pullSpeed, distanceToTarget / Time.fixedDeltaTime);
+                velocityThisFrame = direction * currentSpeed;
+            }
+        }
+        else if (!isFlying)
+        {
+            // Фиксированное падение
+            velocityThisFrame = new Vector2(0, -fallSpeed);
+        }
 
-            // Если уткнулись в стену (близко к точке), просто замираем
-            if (Vector2.Distance(transform.position, targetPoint) < stopDistance)
+        rb.linearVelocity = velocityThisFrame;
+
+        // Если есть какое-то движение — кастомно двигаем с проверкой препятствий
+        if (velocityThisFrame != Vector2.zero)
+        {
+            MoveKinematic(velocityThisFrame * Time.fixedDeltaTime);
+        }
+    }
+
+    // НАША СОБСТВЕННАЯ СИСТЕМА КОЛЛИЗИЙ
+    void MoveKinematic(Vector2 movement)
+    {
+        float distance = movement.magnitude;
+        Vector2 direction = movement.normalized;
+
+        // "Проектируем" форму нашего коллайдера вперед по направлению движения.
+        // Добавляем крошечный отступ (0.01f), чтобы не застревать намертво в текстурах.
+        int count = playerCollider.Cast(direction, movementFilter, hitBuffer, distance + 0.01f);
+
+        if (count > 0)
+        {
+            // Корректируем дистанцию, чтобы встать вплотную к стене/полу, но не заходить внутрь
+            distance = Mathf.Max(0, hitBuffer[0].distance - 0.01f);
+            
+            // Если мы падали и упёрлись во что-то снизу — обнуляем скорость падения
+            if (!isGrappling && direction.y < 0)
             {
                 rb.linearVelocity = Vector2.zero;
             }
         }
+
+        // Перемещаем персонажа на безопасное вычисленное расстояние
+        rb.MovePosition(rb.position + direction * distance);
     }
 
     void DrawRope()
@@ -137,45 +199,33 @@ public class PlayerScript : MonoBehaviour
         isGrappling = false;
         isFlying = false;
         activeKey = Key.None;
-        rb.gravityScale = 1; // Возвращаем физику
+        rb.linearVelocity = Vector2.zero;
         StopAllCoroutines();
     }
 
     void PlayAnimations()
     {
-        float targetZ = 0; // По умолчанию смотрим прямо
+        float targetZ = 0;
 
         if (isFlying || isGrappling)
         {
             animator.Play("dash");
-
-            // Вычисляем направление к крюку
             Vector2 dir = (targetPoint - (Vector2)transform.position).normalized;
 
-            // Проверяем, зацеплены ли мы вертикально (по Y)
-            // Используем порог 0.5f, чтобы небольшие отклонения не ломали логику
             if (Mathf.Abs(dir.y) > 0.5f) 
             {
-                if (dir.y > 0) // Крюк сверху
-                {
-                    targetZ = sRenderer.flipX ? 90f : -90f;
-                }
-                else // Крюк снизу
-                {
-                    targetZ = sRenderer.flipX ? -90f : 90f;
-                }
+                if (dir.y > 0) targetZ = sRenderer.flipX ? 90f : -90f;
+                else targetZ = sRenderer.flipX ? -90f : 90f;
             }
         }
         else
         {
-            // Обычные анимации
             if (rb.linearVelocity.y < -0.1f) animator.Play("fall");
             else animator.Play("idle");
         
-            targetZ = 0; // Сбрасываем наклон
+            targetZ = 0; 
         }
 
-        // Плавный поворот дочернего объекта
         Quaternion targetRotation = Quaternion.Euler(0, 0, targetZ);
         sTransform.localRotation = Quaternion.Lerp(
             sTransform.localRotation, 

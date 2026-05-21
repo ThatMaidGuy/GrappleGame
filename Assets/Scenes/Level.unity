@@ -165,10 +165,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelGenerator
   SawPrefab: {fileID: 5736000047183500740, guid: 46f4e5b360b62e34b80d600a4c0460f1, type: 3}
   StompBlockPrefab: {fileID: 4556216244716536031, guid: c52bb3442f195e0448788f2841a8b21a, type: 3}
+  MovingBlockPrefab: {fileID: 390530289425224649, guid: 61572d69d0b372240a701ede0843d739, type: 3}
   LevelPatterns:
   - {fileID: 2800000, guid: 8045f0542f33f30458d7d41bd2f7d199, type: 3}
   - {fileID: 2800000, guid: 23d7aa786651d0d458860d79f49d414a, type: 3}
   - {fileID: 2800000, guid: 56d6a73526ff5af4ebf2a45c5ec310d3, type: 3}
+  - {fileID: 2800000, guid: 3541340a843b9d84ebbe9c8293f3afa9, type: 3}
+  - {fileID: 2800000, guid: 241bfa89cd9eb724581fe46d8a3262f5, type: 3}
   LevelTilemap: {fileID: 171434249}
   WallTile: {fileID: 11400000, guid: 230ceaa95a637c946bf4ec8e987e7cfc, type: 2}
 --- !u!1 &171434246
@@ -500,10 +503,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 594614265}
+  - component: {fileID: 594614269}
+  - component: {fileID: 594614270}
   - component: {fileID: 594614263}
   - component: {fileID: 594614268}
   - component: {fileID: 594614267}
-  - component: {fileID: 594614269}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -519,15 +523,15 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 594614262}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 4
-  m_Material: {fileID: 6200000, guid: edbe72a1b8a559a49be864f22767e3d5, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -568,17 +572,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerScript
   maxDistance: 10
   hookSpeed: 30
-  pullSpeed: 2.5
+  pullSpeed: 3
   grappleLayer:
     serializedVersion: 2
     m_Bits: 64
   rotationSpeed: 15
   stopDistance: 0.1
+  fallSpeed: 1.5
   lineRenderer: {fileID: 594614268}
   rb: {fileID: 594614263}
   animator: {fileID: 906510415}
   sRenderer: {fileID: 906510414}
   sTransform: {fileID: 1572546307}
+  playerCollider: {fileID: 594614270}
 --- !u!120 &594614268
 LineRenderer:
   serializedVersion: 3
@@ -696,7 +702,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 594614262}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -725,6 +731,52 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.01, y: 0.035}
   m_Radius: 0.12
+--- !u!61 &594614270
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594614262}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.03}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.09, y: 0.22}
+  m_EdgeRadius: 0
 --- !u!1 &619600573
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,9 +833,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.34427086
+    x: 0.23465212
     y: 0
-    width: 0.31111115
+    width: 0.5311505
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
