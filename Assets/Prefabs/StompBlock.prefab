@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7315113196455298203}
   - component: {fileID: 4205502887959567558}
   - component: {fileID: 825597069265606784}
+  - component: {fileID: 1126474256389989724}
   - component: {fileID: 4466176310959251216}
   m_Layer: 0
   m_Name: StompBlock
@@ -190,6 +191,18 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &1126474256389989724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4556216244716536031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5af2ab5a48e9d044d866fafae05bb757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OutsideCameraDestroyer
 --- !u!61 &4466176310959251216
 BoxCollider2D:
   m_ObjectHideFlags: 0

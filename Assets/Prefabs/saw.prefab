@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1528471036959226208}
   - component: {fileID: 6366921194373447751}
   - component: {fileID: 8050323066445611353}
+  - component: {fileID: 2474729713549710446}
   m_Layer: 0
   m_Name: saw
   m_TagString: Untagged
@@ -129,7 +130,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.15
+  m_Radius: 0.12
 --- !u!111 &6366921194373447751
 Animation:
   m_ObjectHideFlags: 0
@@ -159,3 +160,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 038c6be2001c4c440849cbae1ce4c931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SawScript
+--- !u!114 &2474729713549710446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5736000047183500740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5af2ab5a48e9d044d866fafae05bb757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OutsideCameraDestroyer

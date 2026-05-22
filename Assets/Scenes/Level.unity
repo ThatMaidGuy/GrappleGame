@@ -172,6 +172,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 56d6a73526ff5af4ebf2a45c5ec310d3, type: 3}
   - {fileID: 2800000, guid: 3541340a843b9d84ebbe9c8293f3afa9, type: 3}
   - {fileID: 2800000, guid: 241bfa89cd9eb724581fe46d8a3262f5, type: 3}
+  - {fileID: 2800000, guid: 37f303b8b14278b4a81831677d1b1f83, type: 3}
   LevelTilemap: {fileID: 171434249}
   WallTile: {fileID: 11400000, guid: 230ceaa95a637c946bf4ec8e987e7cfc, type: 2}
 --- !u!1 &171434246
@@ -277,70 +278,70 @@ Tilemap:
   m_TileAssetArray:
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 72ee7a07b69b1de4e9b5bfdb7dfffa70, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 20a76a85935a58f42b79fc1ed94541c8, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 20f6f80c4dfccb84fad8ebd77a739990, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: cac2cb09744267f47a832fb59e3d4e17, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: e04f109104e281c46870827eb8b36043, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: bb2d27567f7b7ae4888a93d6d35c15dc, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 230ceaa95a637c946bf4ec8e987e7cfc, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 771253613218fde4d86bb8bf518c7c02, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: f4473650bc327b446b1ccca4707a0a93, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 184eee882fe7a88488ffa11aa1cf013b, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 04de09efd7dce4d4abd5b044921d0fc6, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 6377edfd227102b439c377d49ff49210, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: d295d152fd503de4a8732ac75e534c0d, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: ee86b4aeb82d023478732022855d99c3, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 75681a44549adf1418ca9f4c980520a7, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 2ab4668f06cb783408bfe0e6b6093e31, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 5fb911a6cb481594fa2703220ebecf3b, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 971c7e61e7c52c448b9e0a30ed948975, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 3eae849eebf214846b3b293be1391bb4, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: a1b1760920278034da7ca9a8ce1d1163, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 8528084a4a90d6941a9c347f73318609, type: 2}
+    m_Data: {fileID: 0}
   - serializedVersion: 2
     m_RefCount: 0
-    m_Data: {fileID: 11400000, guid: 2661651ec61b8ed4280fd21fbdd476c1, type: 2}
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
   - serializedVersion: 2
     m_RefCount: 0
@@ -833,10 +834,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.23465212
-    y: 0
-    width: 0.5311505
-    height: 1
+    x: 0
+    y: 0.0034188034
+    width: 1
+    height: 0.9923077
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

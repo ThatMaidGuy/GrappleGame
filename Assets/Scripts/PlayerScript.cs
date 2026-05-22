@@ -26,7 +26,8 @@ public class PlayerScript : MonoBehaviour
 
     private Vector2 targetPoint;
     private bool isGrappling = false; 
-    private bool isFlying = false;    
+    private bool isFlying = false;
+    private bool isDead = false;
     private Vector2 currentHookPos;
     private Key activeKey = Key.None;
 
@@ -55,6 +56,8 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
+        
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
 
@@ -127,6 +130,8 @@ public class PlayerScript : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isDead) return;
+        
         Vector2 velocityThisFrame = Vector2.zero;
 
         if (isGrappling)
@@ -236,6 +241,11 @@ public class PlayerScript : MonoBehaviour
 
     public void Die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        playerCollider.enabled = false;
+        isDead = true;
+        animator.Play("destroy");
+        
+        rb.linearVelocity = Vector2.zero;
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
