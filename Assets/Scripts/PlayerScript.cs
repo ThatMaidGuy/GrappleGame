@@ -22,7 +22,18 @@ public class PlayerScript : MonoBehaviour
     public Animator animator;
     public SpriteRenderer sRenderer;
     public Transform sTransform;
-    public Collider2D playerCollider; // ОБЯЗАТЕЛЬНО: перетащи сюда коллайдер игрока!
+    public Collider2D playerCollider;
+    public GameOverScreen _gameOverScreen;
+
+    [Header("Звуки")]
+    public AudioSource musicSource;
+    public AudioSource deathSound;
+    public AudioSource fallSound;
+    public AudioSource landSound;
+    public AudioSource grappleSound;
+
+    [Header("Эффекты")]
+    public Animation deathScreenEffect;
 
     private Vector2 targetPoint;
     private bool isGrappling = false; 
@@ -34,6 +45,8 @@ public class PlayerScript : MonoBehaviour
     // Слой, на котором находится сам игрок (чтобы луч не спотыкался об себя)
     private ContactFilter2D movementFilter;
     private RaycastHit2D[] hitBuffer = new RaycastHit2D[1];
+
+    private float _deadTimer;
 
     void Start()
     {
@@ -56,7 +69,19 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
-        if (isDead) return;
+        if (_gameOverScreen.gameObject.activeInHierarchy) return;
+        
+        if (_deadTimer >= 2f)
+        {
+            _gameOverScreen.Show();
+            return;
+        }
+        
+        if (isDead)
+        {
+            _deadTimer += Time.deltaTime;
+            return;
+        }
         
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
@@ -123,6 +148,8 @@ public class PlayerScript : MonoBehaviour
             currentHookPos = Vector2.MoveTowards(currentHookPos, targetPoint, hookSpeed * Time.deltaTime);
             yield return null;
         }
+        
+        grappleSound.Play();
 
         isFlying = false;
         isGrappling = true;
@@ -177,6 +204,8 @@ public class PlayerScript : MonoBehaviour
             // Если мы падали и упёрлись во что-то снизу — обнуляем скорость падения
             if (!isGrappling && direction.y < 0)
             {
+                if (rb.linearVelocity.y > 0.1f)
+                    landSound.Play();
                 rb.linearVelocity = Vector2.zero;
             }
         }
@@ -206,6 +235,8 @@ public class PlayerScript : MonoBehaviour
         activeKey = Key.None;
         rb.linearVelocity = Vector2.zero;
         StopAllCoroutines();
+        
+        fallSound.Play();
     }
 
     void PlayAnimations()
@@ -245,7 +276,14 @@ public class PlayerScript : MonoBehaviour
         isDead = true;
         animator.Play("destroy");
         
+        lineRenderer.enabled = false;
+        
+        deathScreenEffect.Play();
+        musicSource.Stop();
+        deathSound.Play();
+        
         rb.linearVelocity = Vector2.zero;
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
+        
     }
 }

@@ -15,6 +15,11 @@ public class StompBlockLogic : MonoBehaviour
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private LayerMask obstacleLayer;
 
+    [Header("Звуки")]
+    public AudioSource heavyStopSound;
+    public AudioSource onSound;
+    public AudioSource offSound;
+
     private Vector2 moveDirection = Vector2.zero;
     private bool isMoving = false;
     private Rigidbody2D rb;
@@ -59,6 +64,8 @@ public class StompBlockLogic : MonoBehaviour
             if (!hit.collider) continue;
             // Если первым на пути луча оказался игрок
             if (((1 << hit.collider.gameObject.layer) & playerLayer) == 0) continue;
+
+            onSound.Play();
             
             StartMoving(dir);
             break; // Прерываем цикл, направление найдено
@@ -126,6 +133,9 @@ public class StompBlockLogic : MonoBehaviour
         isMoving = false;
         // Вызываем выравнивание по сетке
         SnapToGrid();
+        
+        heavyStopSound.Play();
+        offSound.Play();
         
         moveDirection = Vector2.zero;
         sr.sprite = idleSprite;

@@ -11,15 +11,14 @@ public class LevelGenerator : MonoBehaviour
     public Tilemap LevelTilemap;
     public TileBase WallTile;
     
-    private Vector3Int _lastPatternPoint = new Vector3Int(4, 7, 0);
+    private Vector3Int _lastPatternPoint = new Vector3Int(4, 1, 0);
 
     private Color normalYellow = new(1, 1, 0);
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GenerateRandomPattern();
-        GenerateRandomPattern();
+        GeneratePattern(0);
         GenerateRandomPattern();
     }
 
