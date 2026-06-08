@@ -11,7 +11,7 @@ public class CameraLogic : MonoBehaviour
     public Transform SawsContainer; // Сюда нужно перетащить объект с пилами в инспекторе
 
     [Header("Настройки смещения камеры")]
-    [SerializeField] private float _idleDownSpeed = 1.5f; // Скорость опускания камеры, когда игрок стоит
+    public float IdleDownSpeed = 0.15f; // Скорость опускания камеры, когда игрок стоит
     [SerializeField] private float _lerpSpeed = 0.03f;    // Коэффициент для lerp (0.01 - медленно, 0.1 - быстро)
     
     [Header("Логика пил")]
@@ -78,7 +78,7 @@ public class CameraLogic : MonoBehaviour
         if (isCameraStatic)
         {
             // Если камера заблокирована (игрок не падает ниже), плавно смещаем виртуальную цель вниз
-            _currentShift -= _idleDownSpeed * Time.deltaTime;
+            _currentShift -= IdleDownSpeed * Time.deltaTime;
         }
         else
         {

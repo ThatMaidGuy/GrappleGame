@@ -26,6 +26,8 @@ public class StompBlockLogic : MonoBehaviour
     private SpriteRenderer sr;
     private BoxCollider2D bc;
 
+    private bool disable = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -38,6 +40,8 @@ public class StompBlockLogic : MonoBehaviour
 
     void Update()
     {
+        if (disable) return;
+
         // Если блок уже движется, лучи пускать не нужно
         if (!isMoving) CheckForPlayer();
     }
@@ -136,6 +140,8 @@ public class StompBlockLogic : MonoBehaviour
         
         heavyStopSound.Play();
         offSound.Play();
+
+        disable = true;
         
         moveDirection = Vector2.zero;
         sr.sprite = idleSprite;

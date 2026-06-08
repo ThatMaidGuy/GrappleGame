@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScoreSystem : MonoBehaviour
@@ -8,6 +9,8 @@ public class ScoreSystem : MonoBehaviour
     [Header("Настройки")]
     [SerializeField] private GameObject _player;
     [SerializeField] private TextMeshProUGUI _scoreText;
+
+    [SerializeField] private CameraLogic _cameraLogic;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,5 +27,10 @@ public class ScoreSystem : MonoBehaviour
         
         score = Mathf.Abs(Mathf.FloorToInt(_player.transform.position.y));
         _scoreText.text = score.ToString();
+
+        if (score % 10 == 0)
+        {
+            _cameraLogic.IdleDownSpeed += 0.01f;
+        }
     }
 }

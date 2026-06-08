@@ -18,13 +18,21 @@ public class GameOverScreen : MonoBehaviour
     
     public void Show()
     {
+        GlobalScript.Instance.SetHighscore(_scoreSystem.score);
+
         _scoreText.text = "Счет: " + _scoreSystem.score;
-        _highscoreText.text = "Рекорд: " + _scoreSystem.score;
+        _highscoreText.text = "Рекорд: " + GlobalScript.Instance.Highscore;
+
         gameObject.SetActive(true);
     }
     
     public void OnRestartClicked()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void OnToMenuClicked()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }

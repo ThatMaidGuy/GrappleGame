@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9326bb5eef62d2e48b837b7ee8bc1556
+guid: 0688ba3b62da081459f3642347af22e2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3137362428431137556
-    second: pattern7_0
+      213: -2876931972162140785
+    second: Gemini_Generated_Image_ka5skcka5skcka5s_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -24,7 +24,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pattern7_0
+      name: Gemini_Generated_Image_ka5skcka5skcka5s_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 45
         y: 0
-        width: 8
-        height: 11
+        width: 770
+        height: 1202
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 41b7b4691862a8b20800000000000000
-      internalID: 3137362428431137556
+      spriteID: f85cf4c2d951318d0800000000000000
+      internalID: -2876931972162140785
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      pattern7_0: 3137362428431137556
+      Gemini_Generated_Image_ka5skcka5skcka5s_0: -2876931972162140785
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
