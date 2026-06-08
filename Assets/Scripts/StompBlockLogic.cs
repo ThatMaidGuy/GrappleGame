@@ -137,6 +137,8 @@ public class StompBlockLogic : MonoBehaviour
         isMoving = false;
         // Вызываем выравнивание по сетке
         SnapToGrid();
+
+        CameraLogic.Instance.TriggerShake(0.1f, 0.1f);
         
         heavyStopSound.Play();
         offSound.Play();

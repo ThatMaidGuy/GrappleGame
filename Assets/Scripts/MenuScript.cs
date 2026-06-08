@@ -24,6 +24,7 @@ public class MenuScript : MonoBehaviour
 
     public void PlayButtonClicked()
     {
+        Destroy(MenuMusic.Instance.gameObject);
         SceneManager.LoadScene("Level", LoadSceneMode.Single);
     }
 
@@ -40,5 +41,15 @@ public class MenuScript : MonoBehaviour
             _audioMixer.SetFloat("MasterVolume", -80f);
         }
         
+    }
+
+    public void OnHowToClicked()
+    {
+        SceneManager.LoadScene("HowTo", LoadSceneMode.Single);
+    }
+
+    public void OnStoryClicked()
+    {
+        SceneManager.LoadScene("Story", LoadSceneMode.Single);
     }
 }
