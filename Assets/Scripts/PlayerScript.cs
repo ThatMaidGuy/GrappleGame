@@ -12,6 +12,7 @@ public class PlayerScript : MonoBehaviour
     public LayerMask grappleLayer;
     public float rotationSpeed = 15f; 
     public float stopDistance = 0.2f;
+    public SpriteRenderer hookEnd;
 
     [Header("Настройки падения (Кинематика)")]
     public float fallSpeed = 10f; 
@@ -121,6 +122,9 @@ public class PlayerScript : MonoBehaviour
         {
             rb.linearVelocity = Vector2.zero;
             activeKey = key; 
+
+            hookEnd.gameObject.SetActive(true);
+            hookEnd.transform.rotation = GetHookRotation(direction);
             
             Vector2 alignedPoint = hit.point;
             if (direction == Vector2.left || direction == Vector2.right)
@@ -146,10 +150,12 @@ public class PlayerScript : MonoBehaviour
         while (Vector2.Distance(currentHookPos, targetPoint) > 0.2f)
         {
             currentHookPos = Vector2.MoveTowards(currentHookPos, targetPoint, hookSpeed * Time.deltaTime);
+            hookEnd.transform.position = currentHookPos;
             yield return null;
         }
         
         grappleSound.Play();
+        hookEnd.gameObject.SetActive(false);
 
         isFlying = false;
         isGrappling = true;
@@ -228,8 +234,9 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    void StopGrapple()
+    public void StopGrapple()
     {
+        hookEnd.gameObject.SetActive(false);
         isGrappling = false;
         isFlying = false;
         activeKey = Key.None;
@@ -285,5 +292,16 @@ public class PlayerScript : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         
         
+    }
+
+    private Quaternion GetHookRotation(Vector2 dir)
+    {
+        if (dir == Vector2.left)
+            return Quaternion.Euler(new Vector3(0, 0, 180));
+        else if (dir == Vector2.right)
+            return Quaternion.Euler(new Vector3(0, 0, 0));
+        else if (dir == Vector2.up)
+            return Quaternion.Euler(new Vector3(0, 0, 90));
+        return Quaternion.Euler(new Vector3(0, 0, -90));
     }
 }

@@ -6,6 +6,7 @@ public class LevelGenerator : MonoBehaviour
     public GameObject SawPrefab;
     public GameObject StompBlockPrefab;
     public GameObject MovingBlockPrefab;
+    public GameObject DronePrefab;
     
     public Texture2D[] LevelPatterns;
     public Tilemap LevelTilemap;
@@ -82,6 +83,7 @@ public class LevelGenerator : MonoBehaviour
         else if (pixelColor == normalYellow) SpawnPrefab(StompBlockPrefab, worldPosition);
         else if (pixelColor == Color.green) SpawnMovingBlock(MovingBlock.MovementDirection.Horizontal, worldPosition);
         else if (pixelColor == Color.cyan) SpawnMovingBlock(MovingBlock.MovementDirection.Vertical, worldPosition);
+        else if (pixelColor == Color.magenta) SpawnPrefab(DronePrefab, worldPosition);
         
         // Если пиксель прозрачный или белый — ничего не делаем (остается пустота)
     }
