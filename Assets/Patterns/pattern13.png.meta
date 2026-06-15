@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 7b551e370514e5c4d90977eea92af2c6
+guid: 0add7b553293cd046a05de8334745848
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9148800814639467426
-    second: drone_0
+      213: -5446532300690446976
+    second: pattern13_0
+  - first:
+      213: -8750442694781201541
+    second: pattern13_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -24,7 +27,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -113,45 +116,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: drone_0
+      name: pattern13_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 50
-        height: 50
+        y: 5
+        width: 8
+        height: 6
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2abc3655ed117fe70800000000000000
-      internalID: 9148800814639467426
+      spriteID: 085a7afbab70a64b0800000000000000
+      internalID: -5446532300690446976
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: drone_1
+      name: pattern13_1
       rect:
         serializedVersion: 2
-        x: 50
+        x: 0
         y: 0
-        width: 50
-        height: 50
+        width: 8
+        height: 8
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 06816605356318b4a94f84c08de1a441
-      internalID: -1506331151
+      spriteID: b73972e1bbe209680800000000000000
+      internalID: -8750442694781201541
       vertices: []
       indices: 
       edges: []
@@ -160,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7455734a5e556b4468694ed1a5ab66f6
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -168,12 +171,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":50.0,"y":50.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      drone_0: 9148800814639467426
-      drone_1: -1506331151
+      pattern13_0: -5446532300690446976
+      pattern13_1: -8750442694781201541
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

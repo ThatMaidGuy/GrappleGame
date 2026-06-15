@@ -30,7 +30,7 @@ public class CameraLogic : MonoBehaviour
     private float _lastCameraRawY;
     private float _triggerPosition = -2;
     private float _currentShift = 0f;
-    private Rigidbody2D _targetRb;
+    private PlayerScript _targetPs;
     
     // Переменная для хранения базовой позиции перед применением эффектов тряски
     private float _calculatedNewY;
@@ -61,7 +61,7 @@ public class CameraLogic : MonoBehaviour
 
         if (Target != null)
         {
-            _targetRb = Target.GetComponent<Rigidbody2D>();
+            Target.TryGetComponent(out _targetPs);
         }
         
         _lastCameraRawY = transform.position.y;
@@ -90,13 +90,13 @@ public class CameraLogic : MonoBehaviour
         }
         else
         {
-            _currentShift = (float)math.lerp(_currentShift, 0f, Time.deltaTime * 5f);
+            _currentShift = math.lerp(_currentShift, 0f, Time.deltaTime * 5f);
         }
 
         // 3. Расчет целевой позиции камеры (сохраняем в переменную, применим в LateUpdate)
         float desiredY = Target.position.y + _currentShift;
         float targetY = (float)math.lerp(transform.position.y, desiredY, Time.deltaTime * 60 * _lerpSpeed);
-        _calculatedNewY = (float)math.min(transform.position.y, targetY); 
+        _calculatedNewY = math.min(transform.position.y, targetY); 
 
         // 4. Логика пил
         if (!IsSawsActivated)

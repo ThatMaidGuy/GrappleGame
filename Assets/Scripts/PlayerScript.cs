@@ -37,9 +37,9 @@ public class PlayerScript : MonoBehaviour
     public Animation deathScreenEffect;
 
     private Vector2 targetPoint;
-    private bool isGrappling = false; 
-    private bool isFlying = false;
-    private bool isDead = false;
+    public bool IsGrappling = false; 
+    public bool IsFlying = false;
+    public bool IsDead = false;
     private Vector2 currentHookPos;
     private Key activeKey = Key.None;
 
@@ -78,7 +78,7 @@ public class PlayerScript : MonoBehaviour
             return;
         }
         
-        if (isDead)
+        if (IsDead)
         {
             _deadTimer += Time.deltaTime;
             return;
@@ -87,7 +87,7 @@ public class PlayerScript : MonoBehaviour
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
 
-        if (!isGrappling && !isFlying)
+        if (!IsGrappling && !IsFlying)
         {
             if (keyboard.wKey.wasPressedThisFrame || keyboard.upArrowKey.wasPressedThisFrame) 
                 StartHook(Vector2.up, keyboard.wKey.wasPressedThisFrame ? Key.W : Key.UpArrow);
@@ -144,7 +144,7 @@ public class PlayerScript : MonoBehaviour
 
     IEnumerator FlyHookRoutine()
     {
-        isFlying = true;
+        IsFlying = true;
         currentHookPos = transform.position;
 
         while (Vector2.Distance(currentHookPos, targetPoint) > 0.2f)
@@ -157,17 +157,17 @@ public class PlayerScript : MonoBehaviour
         grappleSound.Play();
         hookEnd.gameObject.SetActive(false);
 
-        isFlying = false;
-        isGrappling = true;
+        IsFlying = false;
+        IsGrappling = true;
     }
 
     void FixedUpdate()
     {
-        if (isDead) return;
+        if (IsDead) return;
         
         Vector2 velocityThisFrame = Vector2.zero;
 
-        if (isGrappling)
+        if (IsGrappling)
         {
             float distanceToTarget = Vector2.Distance(transform.position, targetPoint);
             if (distanceToTarget > stopDistance)
@@ -177,7 +177,7 @@ public class PlayerScript : MonoBehaviour
                 velocityThisFrame = direction * currentSpeed;
             }
         }
-        else if (!isFlying)
+        else if (!IsFlying)
         {
             // Фиксированное падение
             velocityThisFrame = new Vector2(0, -fallSpeed);
@@ -208,7 +208,7 @@ public class PlayerScript : MonoBehaviour
             distance = Mathf.Max(0, hitBuffer[0].distance - 0.01f);
             
             // Если мы падали и упёрлись во что-то снизу — обнуляем скорость падения
-            if (!isGrappling && direction.y < 0)
+            if (!IsGrappling && direction.y < 0)
             {
                 if (rb.linearVelocity.y > 0.1f)
                     landSound.Play();
@@ -222,11 +222,11 @@ public class PlayerScript : MonoBehaviour
 
     void DrawRope()
     {
-        if (isGrappling || isFlying)
+        if (IsGrappling || IsFlying)
         {
             lineRenderer.positionCount = 2;
             lineRenderer.SetPosition(0, transform.position);
-            lineRenderer.SetPosition(1, isFlying ? currentHookPos : targetPoint);
+            lineRenderer.SetPosition(1, IsFlying ? currentHookPos : targetPoint);
         }
         else
         {
@@ -237,8 +237,8 @@ public class PlayerScript : MonoBehaviour
     public void StopGrapple()
     {
         hookEnd.gameObject.SetActive(false);
-        isGrappling = false;
-        isFlying = false;
+        IsGrappling = false;
+        IsFlying = false;
         activeKey = Key.None;
         rb.linearVelocity = Vector2.zero;
         StopAllCoroutines();
@@ -250,7 +250,7 @@ public class PlayerScript : MonoBehaviour
     {
         float targetZ = 0;
 
-        if (isFlying || isGrappling)
+        if (IsFlying || IsGrappling)
         {
             animator.Play("dash");
             Vector2 dir = (targetPoint - (Vector2)transform.position).normalized;
@@ -280,7 +280,7 @@ public class PlayerScript : MonoBehaviour
     public void Die()
     {
         playerCollider.enabled = false;
-        isDead = true;
+        IsDead = true;
         animator.Play("destroy");
         
         lineRenderer.enabled = false;
